@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Odunayo Ogundepo</title>
+    <meta name="description" content="Thoughts on NLP, multilingual systems, and AI research">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved === 'dark' || saved === 'light' ? saved : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-global-bg text-global-text antialiased">
+    <!-- Fixed Header -->
+    <header id="main-header" class="group">
+        <div class="header-grid">
+            <!-- Logo -->
+            <a href="index.html" class="group header-logo flex items-center">
+                <img src="assets/favicon.ico" alt="Logo" class="me-3 h-14 w-14 sm:me-3 sm:h-20 sm:w-20" />
+            </a>
+
+            <!-- Title -->
+            <div class="header-title">
+                <span class="text-xl font-bold sm:text-2xl">Odunayo Ogundepo</span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="mobile-nav-menu header-nav sm:flex sm:flex-row sm:items-center" id="navigation-menu">
+                <a href="index.html#about">About</a>
+                <a href="index.html#publications">Publications</a>
+                <a href="blog.html">Blog</a>
+                <a href="index.html#resume">Résumé</a>
+            </nav>
+
+            <!-- Controls -->
+            <div class="header-controls flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20" aria-label="Switch to dark theme">
+                    <svg class="sun-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="moon-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="toggle-navigation-menu" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20 sm:hidden" aria-expanded="false" aria-label="Toggle navigation menu">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-3xl px-4 sm:px-8">
+        <!-- Blog Header -->
+        <section class="mb-8 mt-8">
+            <h1 class="title text-4xl font-bold mb-4">Blog</h1>
+            <p class="text-lg text-muted">Thoughts on NLP, multilingual systems, evaluation, and building AI systems that work in the real world.</p>
+        </section>
+
+        <!-- Blog Posts -->
+        <section id="blog-posts" class="mb-16">
+            <div class="blog-posts">
+
+                <article class="blog-post-card">
+                    <div class="blog-post-header">
+                        <h2 class="blog-post-title">
+                            <a href="posts/multilingual-nlp-lessons.html" class="blog-post-link">
+                                Building Multilingual NLP Systems: Lessons from African Languages
+                            </a>
+                        </h2>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date">January 15, 2026</span>
+                            <span class="blog-post-tags">
+                                <span class="tag tag-safety">NLP</span>
+                                <span class="tag tag-arxiv">Multilingual</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="blog-post-excerpt">
+                        <p>Working with low-resource languages presents unique challenges in NLP. In this post, I share key insights from developing multilingual systems for African languages, including data collection strategies, model selection, and evaluation frameworks that can transfer to other low-resource settings.</p>
+                    </div>
+                </article>
+
+                <article class="blog-post-card">
+                    <div class="blog-post-header">
+                        <h2 class="blog-post-title">
+                            <a href="posts/rag-systems-beyond-basics.html" class="blog-post-link">
+                                Understanding RAG Systems: Beyond Basic Retrieval
+                            </a>
+                        </h2>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date">December 8, 2025</span>
+                            <span class="blog-post-tags">
+                                <span class="tag tag-safety">RAG</span>
+                                <span class="tag tag-github">Information Retrieval</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="blog-post-excerpt">
+                        <p>Retrieval-Augmented Generation has become a cornerstone of modern LLM applications. This post explores advanced RAG patterns, including hybrid retrieval strategies, relevance assessment, and how to build robust systems that know when they don't know.</p>
+                    </div>
+                </article>
+
+                <article class="blog-post-card">
+                    <div class="blog-post-header">
+                        <h2 class="blog-post-title">
+                            <a href="posts/model-evaluation-production.html" class="blog-post-link">
+                                Thoughts on Model Evaluation in Production
+                            </a>
+                        </h2>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date">November 22, 2025</span>
+                            <span class="blog-post-tags">
+                                <span class="tag tag-safety">ML Engineering</span>
+                                <span class="tag tag-github">Evaluation</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="blog-post-excerpt">
+                        <p>Academic benchmarks don't always translate to production success. Drawing from experience building personalized AI systems, I discuss practical evaluation strategies, monitoring approaches, and how to close the loop between offline metrics and real-world performance.</p>
+                    </div>
+                </article>
+
+                <article class="blog-post-card">
+                    <div class="blog-post-header">
+                        <h2 class="blog-post-title">
+                            <a href="posts/building-karantaocr.html" class="blog-post-link">
+                                Open Source and Research: Building KarantaOCR
+                            </a>
+                        </h2>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date">October 5, 2025</span>
+                            <span class="blog-post-tags">
+                                <span class="tag tag-safety">OCR</span>
+                                <span class="tag tag-github">Open Source</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="blog-post-excerpt">
+                        <p>Reflections on building an open-source OCR system for African languages. I share the technical journey, from data collection and model architecture to community collaboration and deployment strategies that make language technology more accessible.</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div class="mx-auto max-w-3xl px-4 sm:px-8 py-8 text-center text-sm opacity-75">
+        <p>Built from scratch by me and Claude :)</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

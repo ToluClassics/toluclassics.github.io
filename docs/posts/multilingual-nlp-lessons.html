@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Multilingual NLP Systems - Odunayo Ogundepo</title>
+    <meta name="description" content="Lessons from developing NLP systems for African languages">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved === 'dark' || saved === 'light' ? saved : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-global-bg text-global-text antialiased">
+    <!-- Fixed Header -->
+    <header id="main-header" class="group">
+        <div class="header-grid">
+            <!-- Logo -->
+            <a href="../index.html" class="group header-logo flex items-center">
+                <img src="../assets/favicon.ico" alt="Logo" class="me-3 h-14 w-14 sm:me-3 sm:h-20 sm:w-20" />
+            </a>
+
+            <!-- Title -->
+            <div class="header-title">
+                <span class="text-xl font-bold sm:text-2xl">Odunayo Ogundepo</span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="mobile-nav-menu header-nav sm:flex sm:flex-row sm:items-center" id="navigation-menu">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#publications">Publications</a>
+                <a href="../blog.html">Blog</a>
+                <a href="../index.html#resume">Résumé</a>
+            </nav>
+
+            <!-- Controls -->
+            <div class="header-controls flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20" aria-label="Switch to dark theme">
+                    <svg class="sun-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="moon-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="toggle-navigation-menu" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20 sm:hidden" aria-expanded="false" aria-label="Toggle navigation menu">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-3xl px-4 sm:px-8">
+        <!-- Back Link -->
+        <div class="mt-8 mb-8">
+            <a href="../blog.html" class="text-accent-2 hover:text-accent transition-colors">← Back to Blog</a>
+        </div>
+
+        <!-- Article -->
+        <article class="prose mb-16">
+            <header class="mb-8">
+                <h1 class="title text-4xl font-bold mb-4">Building Multilingual NLP Systems: Lessons from African Languages</h1>
+                <div class="text-muted mb-4">
+                    <time datetime="2026-01-15">January 15, 2026</time>
+                    <span class="mx-2">•</span>
+                    <span>10 min read</span>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="tag tag-safety">NLP</span>
+                    <span class="tag tag-arxiv">Multilingual</span>
+                    <span class="tag tag-github">Low-Resource</span>
+                </div>
+            </header>
+
+            <div class="blog-content">
+                <p class="lead">
+                    Working with low-resource languages presents unique challenges that force us to rethink assumptions made when building NLP systems for high-resource languages like English. Over the past few years, I've had the opportunity to work on multilingual systems for African languages, and in this post, I want to share some key lessons that can transfer to other low-resource settings.
+                </p>
+
+                <h2>The Data Challenge</h2>
+                <p>
+                    The most obvious challenge is data scarcity. For many African languages, you won't find large pre-existing corpora like Common Crawl or Wikipedia dumps. This forces you to get creative with data collection and to think carefully about data quality over quantity.
+                </p>
+
+                <h3>Strategies that Work</h3>
+                <ul>
+                    <li><strong>Community partnerships:</strong> Work with native speakers and language communities. They know where language data exists (news sites, social media, religious texts) and can help with quality assessment.</li>
+                    <li><strong>Cross-lingual transfer:</strong> Leverage related high-resource languages. Techniques like translate-train and multilingual pre-training can provide surprising gains.</li>
+                    <li><strong>Synthetic data:</strong> When done carefully, back-translation and data augmentation can help, but be mindful of introducing artifacts.</li>
+                </ul>
+
+                <h2>Model Selection and Adaptation</h2>
+                <p>
+                    Not all model architectures are equally suited for low-resource scenarios. Smaller, more efficient models often outperform larger ones when data is limited, and fine-tuning strategies matter more than model scale.
+                </p>
+
+                <h3>What I've Learned</h3>
+                <p>
+                    Multilingual models like mT5 and XLM-R provide a strong starting point, but careful fine-tuning is essential. Consider:
+                </p>
+                <ul>
+                    <li>Using intermediate-task fine-tuning on related languages</li>
+                    <li>Vocabulary augmentation for underrepresented scripts</li>
+                    <li>Parameter-efficient fine-tuning methods like LoRA to avoid overfitting</li>
+                </ul>
+
+                <h2>Evaluation Frameworks</h2>
+                <p>
+                    Standard benchmarks often don't exist for low-resource languages, so you need to build your own. This is actually an opportunity to create more meaningful evaluation sets that reflect real-world usage patterns.
+                </p>
+
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Involve native speakers in creating test sets</li>
+                    <li>Consider cultural context and domain-specific language use</li>
+                    <li>Build evaluation sets that test robustness, not just accuracy</li>
+                    <li>Document annotation processes and inter-annotator agreement</li>
+                </ul>
+
+                <h2>Deployment and Maintenance</h2>
+                <p>
+                    Building the model is only half the battle. Deploying systems for low-resource languages requires thinking about infrastructure constraints, latency requirements, and ongoing model maintenance.
+                </p>
+
+                <h2>Looking Forward</h2>
+                <p>
+                    The NLP community is making progress on multilingual systems, but there's still a long way to go. Projects like MIRACL, AfriQA, and AfroBench are helping to create the infrastructure needed for rigorous evaluation across diverse languages.
+                </p>
+
+                <p>
+                    If you're working on low-resource NLP, I'd encourage you to:
+                </p>
+                <ul>
+                    <li>Share your data and benchmarks openly when possible</li>
+                    <li>Engage with language communities throughout the research process</li>
+                    <li>Focus on practical applications that provide real value</li>
+                    <li>Document your methods and failure modes thoroughly</li>
+                </ul>
+
+                <h2>Resources</h2>
+                <ul>
+                    <li><a href="https://github.com/masakhane-io/masakhane" class="cactus-link">Masakhane Community</a> - A grassroots organization for African NLP</li>
+                    <li><a href="https://arxiv.org/abs/2302.14957" class="cactus-link">MIRACL Dataset</a> - Multilingual information retrieval benchmark</li>
+                    <li><a href="#" class="cactus-link">AfriQA</a> - Question answering for African languages</li>
+                </ul>
+
+                <hr>
+
+                <p class="text-sm text-muted">
+                    <em>Have thoughts or questions about this post? Feel free to reach out via email or connect on LinkedIn.</em>
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <div class="mx-auto max-w-3xl px-4 sm:px-8 py-8 text-center text-sm opacity-75">
+        <p>Built from scratch by me and Claude :)</p>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

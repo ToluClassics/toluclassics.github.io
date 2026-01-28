@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odunayo Ogundepo - Portfolio</title>
-    <meta name="description" content="Applied AI Researcher">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="styles.css">
+    <title>Your Post Title - Odunayo Ogundepo</title>
+    <meta name="description" content="Brief description of your blog post">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         (function() {
@@ -25,8 +25,8 @@
     <header id="main-header" class="group">
         <div class="header-grid">
             <!-- Logo -->
-            <a href="#" class="group header-logo flex items-center">
-                <img src="assets/favicon.ico" alt="Logo" class="me-3 h-14 w-14 sm:me-3 sm:h-20 sm:w-20" />
+            <a href="../index.html" class="group header-logo flex items-center">
+                <img src="../assets/favicon.ico" alt="Logo" class="me-3 h-14 w-14 sm:me-3 sm:h-20 sm:w-20" />
             </a>
 
             <!-- Title -->
@@ -36,11 +36,10 @@
 
             <!-- Desktop Navigation -->
             <nav class="mobile-nav-menu header-nav sm:flex sm:flex-row sm:items-center" id="navigation-menu">
-                <a href="#about">About</a>
-                <!-- <a href="#news">News</a> -->
-                <a href="#publications">Publications</a>
-                <a href="blog.html">Blog</a>
-                <a href="#resume">Résumé</a>
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#publications">Publications</a>
+                <a href="../blog.html">Blog</a>
+                <a href="../index.html#resume">Résumé</a>
             </nav>
 
             <!-- Controls -->
@@ -70,33 +69,79 @@
 
     <!-- Main Content -->
     <main class="mx-auto max-w-3xl px-4 sm:px-8">
-        <!-- About Section -->
-        <section id="about" class="mb-16">
-            <div class="prose" id="about-content">
-                <div class="loading-spinner">Loading about content...</div>
-            </div>
-        </section>
+        <!-- Back Link -->
+        <div class="mt-8 mb-8">
+            <a href="../blog.html" class="text-accent-2 hover:text-accent transition-colors">← Back to Blog</a>
+        </div>
 
-        <!-- News Section -->
-        <!-- <section id="news" class="mb-16">
-            <div class="prose" id="news-content">
-                <div class="loading-spinner">Loading news content...</div>
-            </div>
-        </section> -->
+        <!-- Article -->
+        <article class="prose mb-16">
+            <header class="mb-8">
+                <h1 class="title text-4xl font-bold mb-4">Your Post Title Here</h1>
+                <div class="text-muted mb-4">
+                    <time datetime="2026-01-26">January 26, 2026</time>
+                    <span class="mx-2">•</span>
+                    <span>5 min read</span>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="tag tag-safety">Tag1</span>
+                    <span class="tag tag-arxiv">Tag2</span>
+                    <span class="tag tag-github">Tag3</span>
+                </div>
+            </header>
 
-        <!-- Publications Section -->
-        <section id="publications" class="mb-16">
-            <div class="prose" id="publications-content">
-                <div class="loading-spinner">Loading publications content...</div>
-            </div>
-        </section>
+            <div class="blog-content">
+                <p class="lead">
+                    Start with an engaging introduction paragraph. This should be wrapped in a paragraph tag with the class "lead" for larger, standout text.
+                </p>
 
-        <!-- Resume Section -->
-        <section id="resume" class="mb-16">
-            <div class="prose" id="resume-content">
-                <div class="loading-spinner">Loading resume content...</div>
+                <h2>First Section Heading</h2>
+                <p>
+                    Your content goes here. Write naturally and include your thoughts, experiences, and insights.
+                </p>
+
+                <h3>Subsection</h3>
+                <p>
+                    Add more details in subsections as needed.
+                </p>
+
+                <ul>
+                    <li>Bullet point one</li>
+                    <li>Bullet point two</li>
+                    <li>Bullet point three</li>
+                </ul>
+
+                <h2>Second Section</h2>
+                <p>
+                    Continue building your narrative. You can include <strong>bold text</strong> for emphasis and <em>italic text</em> where appropriate.
+                </p>
+
+                <blockquote>
+                    Optional: Add a quote or callout using blockquote tags.
+                </blockquote>
+
+                <h2>Code Examples (if needed)</h2>
+                <p>
+                    Inline code can be added like this: <code>const example = true;</code>
+                </p>
+
+                <pre><code>// For code blocks, use pre and code tags
+function example() {
+    return "Hello, World!";
+}</code></pre>
+
+                <h2>Conclusion</h2>
+                <p>
+                    Wrap up your post with key takeaways or next steps.
+                </p>
+
+                <hr>
+
+                <p class="text-sm text-muted">
+                    <em>Have thoughts or questions about this post? Feel free to reach out via email or connect on LinkedIn.</em>
+                </p>
             </div>
-        </section>
+        </article>
     </main>
 
     <!-- Footer -->
@@ -104,6 +149,6 @@
         <p>Built from scratch by me and Claude :)</p>
     </div>
 
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
 </body>
 </html>
