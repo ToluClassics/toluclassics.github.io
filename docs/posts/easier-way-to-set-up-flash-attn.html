@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Easier Way to Set Up flash-attn - Odunayo Ogundepo</title>
+    <meta name="description" content="A practical way to install flash-attn by matching the wheel to your Python, PyTorch, CUDA, and architecture setup.">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved === 'dark' || saved === 'light' ? saved : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-global-bg text-global-text antialiased">
+    <!-- Fixed Header -->
+    <header id="main-header" class="group">
+        <div class="header-grid">
+            <!-- Logo -->
+            <a href="../index.html" class="group header-logo flex items-center">
+                <img src="../assets/favicon.ico" alt="Logo" class="me-3 h-14 w-14 sm:me-3 sm:h-20 sm:w-20" />
+            </a>
+
+            <!-- Title -->
+            <div class="header-title">
+                <span class="text-xl font-bold sm:text-2xl">Odunayo Ogundepo</span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="mobile-nav-menu header-nav sm:flex sm:flex-row sm:items-center" id="navigation-menu">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#publications">Publications</a>
+                <a href="../blog.html">Blog</a>
+                <a href="../index.html#resume">Résumé</a>
+            </nav>
+
+            <!-- Controls -->
+            <div class="header-controls flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20" aria-label="Switch to dark theme">
+                    <svg class="sun-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="moon-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="toggle-navigation-menu" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20 sm:hidden" aria-expanded="false" aria-label="Toggle navigation menu">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-3xl px-4 sm:px-8">
+        <!-- Back Link -->
+        <div class="mt-8 mb-8">
+            <a href="../blog.html" class="text-accent-2 hover:text-accent transition-colors">← Back to Blog</a>
+        </div>
+
+        <!-- Article -->
+        <article class="prose mb-16">
+            <header class="mb-8">
+                <h1 class="title text-4xl font-bold mb-4">An Easier Way to Set Up <code>flash-attn</code></h1>
+                <div class="text-muted mb-4">
+                    <time datetime="2026-03-27">March 27, 2026</time>
+                    <span class="mx-2">•</span>
+                    <span>6 min read</span>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="tag tag-github">PyTorch</span>
+                    <span class="tag tag-arxiv">CUDA</span>
+                    <span class="tag tag-safety">Tooling</span>
+                </div>
+            </header>
+
+            <div class="blog-content">
+                <p class="lead">A simpler way to avoid the “it installed, but import still fails” problem.</p>
+
+                <figure>
+                    <img src="../assets/dependency_hell.png" alt="Illustration of a flash-attn setup where installation appears to succeed but import fails because Python, PyTorch, CUDA, and ABI dependencies do not line up." class="blog-image-compact" loading="lazy">
+                    <figcaption>When your python environment is not properly set up, <code>pip install</code> can succeed while <code>import flash_attn</code> still fails.</figcaption>
+                </figure>
+
+                <p><code>flash-attn</code> installs successfully.</p>
+
+                <p>And then it does not work. You can run:</p>
+
+                <pre><code>pip install flash-attn</code></pre>
+
+                <p>or even:</p>
+
+                <pre><code>pip install flash-attn --no-build-isolation</code></pre>
+
+                <p>Everything completes without errors. But the moment you try:</p>
+
+                <pre><code>import flash_attn</code></pre>
+
+                <p>you hit undefined symbols and broken binaries.</p>
+
+                <p>
+                    This shows up often enough in the FlashAttention issue tracker that it has become a recognizable pattern:
+                    the install looks fine, but the import fails because the built or downloaded artifact does not actually match the
+                    PyTorch, CUDA, Python, or ABI expectations of the environment.
+                </p>
+
+                <p>
+                    A few representative github issues that demonstrate this:
+                    <a href="https://github.com/Dao-AILab/flash-attention/issues/809" class="cactus-link">#809</a>,
+                    <a href="https://github.com/Dao-AILab/flash-attention/issues/667" class="cactus-link">#667</a>,
+                    <a href="https://github.com/Dao-AILab/flash-attention/issues/966" class="cactus-link">#966</a>,
+                    <a href="https://github.com/Dao-AILab/flash-attention/issues/919" class="cactus-link">#919</a>,
+                    <a href="https://github.com/Dao-AILab/flash-attention/issues/784" class="cactus-link">#784</a>.
+                </p>
+
+                <p>That is because the install step does not guarantee that the installation actually matches your environment setup properly.</p>
+
+                <p>I kept running into this every time I set up a vLLM environment and eventually settled on a much simpler approach.</p>
+
+                <hr>
+
+                <h2>The Problem</h2>
+
+                <p>The issue is not installing <code>flash-attn</code>.</p>
+
+                <p>It is installing the <strong>right build</strong> of <code>flash-attn</code>.</p>
+
+                <p>Your environment is defined by:</p>
+
+                <ul>
+                    <li>Python version</li>
+                    <li>PyTorch version</li>
+                    <li>CUDA version</li>
+                    <li>System architecture</li>
+                </ul>
+
+                <p>If any of these do not match the wheel, the install may succeed, but the import will fail.</p>
+
+                <p>That is why relying on:</p>
+
+                <pre><code>pip install flash-attn --no-build-isolation</code></pre>
+
+                <p>is unreliable. It leaves too much up to <code>pip</code> to figure out.</p>
+
+                <h2>A Simpler Approach</h2>
+
+                <p>The easiest way to install <code>flash-attn</code> is:</p>
+
+                <p><strong>Download the exact wheel that matches your environment.</strong></p>
+
+                <p>No guessing. No builds. No surprises.</p>
+
+                <h2>Step 1: Install PyTorch First</h2>
+
+                <p>Install PyTorch before anything else.</p>
+
+                <p>Everything in <code>flash-attn</code> depends on your PyTorch and CUDA setup, so this needs to be fixed first.</p>
+
+                <h2>Step 2: Identify Your Environment</h2>
+
+                <p>You need four things:</p>
+
+                <ul>
+                    <li>Python version</li>
+                    <li>PyTorch version</li>
+                    <li>CUDA version</li>
+                    <li>System architecture</li>
+                </ul>
+
+                <p>These determine exactly which wheel will work.</p>
+
+                <h2>Step 3: Understand the Wheel Name</h2>
+
+                <p>A typical flash-attn wheel looks like this:</p>
+
+                <pre><code>flash_attn-2.7.3+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl</code></pre>
+
+                <p>It looks messy, but it is structured.</p>
+
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Example</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>flash-attn</code> version</td>
+                                <td><code>2.7.3</code></td>
+                                <td>Library version</td>
+                            </tr>
+                            <tr>
+                                <td>CUDA</td>
+                                <td><code>cu12</code></td>
+                                <td>CUDA 12</td>
+                            </tr>
+                            <tr>
+                                <td>PyTorch</td>
+                                <td><code>torch2.6</code></td>
+                                <td>PyTorch 2.6</td>
+                            </tr>
+                            <tr>
+                                <td>ABI</td>
+                                <td><code>cxx11abiTRUE</code></td>
+                                <td>Compiler compatibility</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td><code>cp310</code></td>
+                                <td>Python 3.10</td>
+                            </tr>
+                            <tr>
+                                <td>Architecture</td>
+                                <td><code>linux_x86_64</code></td>
+                                <td>OS and CPU</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Step 4: Match Your Environment</h2>
+
+                <p>Use this template:</p>
+
+                <pre><code>flash_attn-{flash_version}+cu{cuda}torch{torch_version}cxx11abi{ABI}-cp{python}-cp{python}-{arch}.whl</code></pre>
+
+                <h3>Example</h3>
+
+                <p>If your setup is:</p>
+
+                <ul>
+                    <li>Python 3.10 → <code>cp310</code></li>
+                    <li>PyTorch 2.6 → <code>torch2.6</code></li>
+                    <li>CUDA 12 → <code>cu12</code></li>
+                    <li>Linux x86_64 → <code>linux_x86_64</code></li>
+                </ul>
+
+                <p>Then you want:</p>
+
+                <pre><code>flash_attn-2.7.3+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl</code></pre>
+
+                <h2>Step 5: Use a Small Helper Script</h2>
+
+                <p>Here is a small script to print the tags for your environment:</p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-label">Python</span>
+                    </div>
+                    <pre><code>import platform
+import sys
+import torch
+
+def python_tag():
+    return f"cp{sys.version_info.major}{sys.version_info.minor}"
+
+def arch_tag():
+    system = platform.system().lower()
+    machine = platform.machine().lower()
+    if system == "linux" and machine in ("x86_64", "amd64"):
+        return "linux_x86_64"
+    if system == "linux" and machine in ("aarch64", "arm64"):
+        return "linux_aarch64"
+    if system == "darwin" and machine == "arm64":
+        return "macosx_arm64"
+    if system == "darwin" and machine == "x86_64":
+        return "macosx_x86_64"
+    return f"{system}_{machine}"
+
+def cuda_tag():
+    cuda = torch.version.cuda
+    if cuda is None:
+        return "cuXXX"
+    major = cuda.split(".")[0]
+    return f"cu{major}"
+
+def torch_tag():
+    version = torch.__version__.split("+")[0]
+    major, minor, *_ = version.split(".")
+    return f"torch{major}.{minor}"
+
+print("Python tag :", python_tag())
+print("Torch tag  :", torch_tag())
+print("CUDA tag   :", cuda_tag())
+print("Arch tag   :", arch_tag())</code></pre>
+                </div>
+
+                <p>Use these values to match the correct wheel manually.</p>
+
+                <h2>Step 6: Download and Install</h2>
+
+                <p>Go to the <a href="https://github.com/Dao-AILab/flash-attention/releases" class="cactus-link">FlashAttention releases page</a>:</p>
+
+                <ol>
+                    <li>Pick the version.</li>
+                    <li>Open the assets.</li>
+                    <li>Match the wheel.</li>
+                    <li>Download it.</li>
+                </ol>
+
+                <p>Then install:</p>
+
+                <pre><code>pip install &lt;wheel_file&gt;</code></pre>
+
+                <hr>
+
+                <h2>References</h2>
+
+                <ul>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/809" class="cactus-link">Issue #809</a> - install succeeds, then <code>import flash_attn</code> fails with an undefined symbol.</li>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/667" class="cactus-link">Issue #667</a> - a Python 3.11 / PyTorch 2.1 / CUDA 12.1 environment reports an undefined symbol from the installed extension.</li>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/966" class="cactus-link">Issue #966</a> - import of <code>flash_attn_2_cuda</code> fails after build.</li>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/919" class="cactus-link">Issue #919</a> - wheel and source attempts still produce undefined symbol errors in a mismatched environment.</li>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/784" class="cactus-link">Issue #784</a> - another report of <code>pip install --no-build-isolation</code> followed by import-time undefined symbol failure.</li>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/853" class="cactus-link">Issue #853</a> - one user reports resolving the problem by installing a specific matching wheel file manually.</li>
+                    <li><a href="https://github.com/Dao-AILab/flash-attention/issues/1696" class="cactus-link">Issue #1696</a> - a newer example showing successful install but runtime import failure on PyTorch 2.7.0, with a source build working around the mismatch.</li>
+                </ul>
+
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <div class="mx-auto max-w-3xl px-4 sm:px-8 py-8 text-center text-sm opacity-75">
+        <p>Built from scratch by me and Claude :)</p>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
