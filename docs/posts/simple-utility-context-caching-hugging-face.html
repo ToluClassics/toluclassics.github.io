@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Simple Utility for Context Caching with Hugging Face - Odunayo Ogundepo</title>
+    <meta name="description" content="A compact note on generation caches versus context caches in Hugging Face Transformers, with a simple utility for reusing a fixed system prompt across independent requests.">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved === 'dark' || saved === 'light' ? saved : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-global-bg text-global-text antialiased">
+    <!-- Fixed Header -->
+    <header id="main-header" class="group">
+        <div class="header-grid">
+            <!-- Logo -->
+            <a href="../index.html" class="group header-logo flex items-center">
+                <img src="../assets/favicon.ico" alt="Logo" class="me-3 h-14 w-14 sm:me-3 sm:h-20 sm:w-20" />
+            </a>
+
+            <!-- Title -->
+            <div class="header-title">
+                <span class="text-xl font-bold sm:text-2xl">Odunayo Ogundepo</span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="mobile-nav-menu header-nav sm:flex sm:flex-row sm:items-center" id="navigation-menu">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#publications">Publications</a>
+                <a href="../blog.html">Blog</a>
+                <a href="../index.html#resume">Résumé</a>
+            </nav>
+
+            <!-- Controls -->
+            <div class="header-controls flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20" aria-label="Switch to dark theme">
+                    <svg class="sun-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="moon-icon h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="toggle-navigation-menu" class="flex h-7 w-7 items-center justify-center rounded-md border border-accent-2/20 bg-accent-2/10 p-1 transition-colors hover:bg-accent-2/20 sm:hidden" aria-expanded="false" aria-label="Toggle navigation menu">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto max-w-3xl px-4 sm:px-8">
+        <!-- Back Link -->
+        <div class="mt-8 mb-8">
+            <a href="../blog.html" class="text-accent-2 hover:text-accent transition-colors">← Back to Blog</a>
+        </div>
+
+        <!-- Article -->
+        <article class="prose mb-16">
+            <header class="mb-8">
+                <h1 class="title text-4xl font-bold mb-4">A Simple Utility for Context Caching with Hugging Face</h1>
+                <div class="text-muted mb-4">
+                    <time datetime="2026-03-25">March 25, 2026</time>
+                    <span class="mx-2">•</span>
+                    <span>5 min read</span>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="tag tag-github">Transformers</span>
+                    <span class="tag tag-arxiv">Inference</span>
+                    <span class="tag tag-safety">Caching</span>
+                </div>
+            </header>
+
+            <div class="blog-content">
+                <p class="lead">When working with Hugging Face Transformers, caching is usually discussed in the context of <strong>generation</strong>. Most of the available cache abstractions, like <code>past_key_values</code> or <code>DynamicCache</code>, are designed to speed up decoding during autoregressive generation.</p>
+
+                <p>However, these are fundamentally <strong>generation caches</strong>, not <strong>context caches</strong>.</p>
+
+                <p>This distinction becomes important when you want to reuse a fixed prefix, such as a system prompt, across multiple independent requests without carrying over previous user interactions. This is a feature that is automatically supported by most existing inference engines like VLLM.</p>
+
+                <h2>The Problem</h2>
+
+                <p>With, Huggingface transformers If you directly reuse <code>out.past_key_values</code> from <code>model.generate</code>, you are not just caching the system prompt. You are caching:</p>
+
+                <ul>
+                    <li>system prompt</li>
+                    <li>user input</li>
+                    <li>assistant response</li>
+                    <li>generated tokens</li>
+                </ul>
+
+                <p>This means every subsequent request implicitly appends to the entire previous interaction, which is not what we want.</p>
+
+                <p>What we really want is a way to cache only a reusable context prefix, like a system prompt, and combine it with fresh inputs each time.</p>
+
+                <h2>The Constraint with Chat Templates</h2>
+
+                <p>Using <code>tokenizer.apply_chat_template</code> introduces another limitation:</p>
+
+                <ul>
+                    <li>a <strong>system-only prompt is not valid</strong> under most chat templates</li>
+                    <li>templates expect a structured conversation: system -&gt; user -&gt; assistant</li>
+                </ul>
+
+                <p>So we cannot directly construct a system-only cache using the template.</p>
+
+                <h2>A Simple Utility Approach</h2>
+
+                <p>The workaround is simple and practical: build a cache using <code>system + empty user + assistant prefix</code>.</p>
+
+                <p>This gives us a valid prefix that can be reused safely.</p>
+
+                <p>Then for every new request:</p>
+
+                <ul>
+                    <li>clone the cache</li>
+                    <li>append only the new user input</li>
+                    <li>generate a response</li>
+                </ul>
+
+                <p>This ensures no history leakage, proper formatting, and efficient reuse of the system context.</p>
+
+                <h2>Example Utility Script</h2>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-label">Python</span>
+                    </div>
+                    <pre><code class="language-python">import copy
+import inspect
+import time
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+model_id = "Qwen/Qwen2-0.5B-Instruct"
+
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+    device_map="auto",
+)
+model.eval()
+model.generation_config.temperature = None
+model.generation_config.top_p = None
+model.generation_config.top_k = None
+prepare_inputs_params = set(inspect.signature(model.prepare_inputs_for_generation).parameters)
+
+if tokenizer.pad_token_id is None:
+    tokenizer.pad_token_id = tokenizer.eos_token_id
+
+
+def build_user_prefix_cache(user_prefix: str):
+    prefix_text = tokenizer.apply_chat_template(
+        [{"role": "user", "content": user_prefix}],
+        tokenize=False,
+        add_generation_prompt=False,
+        continue_final_message=True,
+    )
+
+    inputs = tokenizer(
+        prefix_text,
+        add_special_tokens=False,
+        return_tensors="pt",
+    ).to(model.device)
+
+    with torch.no_grad():
+        outputs = model(**inputs, use_cache=True)
+
+    return outputs.past_key_values, inputs["input_ids"].shape[1], prefix_text
+
+
+def generate_with_prefix_cache(user_text, prefix_cache, prefix_len, prefix_text, user_prefix):
+    kv_cache = copy.deepcopy(prefix_cache)
+
+    full_prompt_text = tokenizer.apply_chat_template(
+        [{"role": "user", "content": user_prefix + user_text}],
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+    suffix_text = full_prompt_text[len(prefix_text):]
+
+    inputs = tokenizer(
+        suffix_text,
+        add_special_tokens=False,
+        return_tensors="pt",
+    ).to(model.device)
+    suffix_len = inputs["input_ids"].shape[1]
+
+    full_attention_mask = torch.ones(
+        (1, prefix_len + suffix_len),
+        device=model.device,
+        dtype=torch.long,
+    )
+
+    generate_kwargs = {
+        "input_ids": inputs["input_ids"],
+        "attention_mask": full_attention_mask,
+        "past_key_values": kv_cache,
+        "max_new_tokens": 128,
+        "do_sample": False,
+        "use_cache": True,
+        "return_dict_in_generate": True,
+    }
+    if "cache_position" in prepare_inputs_params:
+        generate_kwargs["cache_position"] = torch.arange(
+            prefix_len,
+            prefix_len + suffix_len,
+            device=model.device,
+        )
+
+    with torch.no_grad():
+        out = model.generate(**generate_kwargs)
+
+    generated = out.sequences[0, suffix_len:]
+    return tokenizer.decode(generated, skip_special_tokens=True)
+
+def timed_call(fn, *args):
+    start = time.perf_counter()
+    output = fn(*args)
+    elapsed = time.perf_counter() - start
+    return output, elapsed
+
+# Common prefix.
+prefix = (
+    "You are an expert school principal, skilled in effectively managing "
+    "faculty and staff. Draft 10-15 questions for a potential first grade "
+    "Head Teacher for my K-12, all-girls', independent school that emphasizes "
+    "community, joyful discovery, and life-long learning. The candidate is "
+    "coming in for a first-round panel interview for a 8th grade Math "
+    "teaching role. They have 5 years of previous teaching experience "
+    "as an assistant teacher at a co-ed, public school with experience "
+    "in middle school math teaching. Based on these information, fulfill "
+    "the following paragraph: "
+)
+
+# Sample prompts.
+prompts = [
+    "Who do i teach?",
+    "Hello, my name is",
+    "The president of the United States is",
+    "The capital of France is",
+    "The future of AI is",
+]*100
+
+
+for prompt in prompts:
+    cached_output, cached_time = timed_call(
+        generate_with_prefix_cache, prompt, cache[0], cache[1], cache[2], prefix
+    )
+    cached_generation_total += cached_time
+
+
+print(f"Cache build time: {cache_build_time:.4f}s")
+print(f"Total with cache: {cached_generation_total:.4f}s")
+                </div>
+
+                <h2>Key Insights from Hugging Face KV Cache Design</h2>
+
+                <p>A few important details from the Hugging Face KV cache design help clarify why this utility works and where its limitations come from.</p>
+
+                <h3>KV Cache = Prefix + New Tokens</h3>
+
+                <p>The cache is always treated as a <strong>prefix of the sequence</strong>, not a separate structure. When you pass a cache, you are effectively saying: everything in this cache happened before these new tokens.</p>
+
+                <p>This is exactly why reusing <code>past_key_values</code> from a full generation leads to unintended context carryover.</p>
+
+                <h3>Attention Depends on Full Sequence Length</h3>
+
+                <p>When using a cache, attention is computed over:</p>
+
+                <div class="code-block code-block-compact">
+                    <div class="code-block-header">
+                        <span class="code-block-label">Sequence Length</span>
+                    </div>
+                    <pre><code class="language-plaintext">past_kv_length + new_tokens_length</code></pre>
+                </div>
+
+                <p>So the attention mask must reflect the combined length of cached tokens and new inputs.</p>
+
+                <p>This is typically handled automatically inside <code>generate()</code>, but it becomes important when manually reusing caches or building custom loops.</p>
+
+                <h3>Caches Grow Over Time</h3>
+
+                <p>The default cache, <code>DynamicCache</code>, grows as new tokens are generated by appending key/value pairs at each step.</p>
+
+                <p>This reinforces an important point: a KV cache is inherently tied to a <em>growing sequence</em>, not a fixed context.</p>
+
+                <h3>Cache Implementations Are Generation-Focused</h3>
+
+                <p>Transformers provides multiple cache implementations, including <code>DynamicCache</code>, <code>StaticCache</code>, and <code>QuantizedCache</code>. All of these are optimized for <strong>generation efficiency</strong>, not for reusing a fixed prompt across independent requests.</p>
+
+                <h2>Why Context Caching Is Not Native</h2>
+
+                <p>Because of how KV caching works, the cache always represents a <strong>single continuous sequence</strong>. There is no built-in concept of "this part is reusable" or "this part should be reset."</p>
+
+                <p>This is why building a reusable context cache requires manually controlling what goes into the cache, avoiding reuse of generated tokens, and carefully managing how new inputs are appended.</p>
+
+                <h2>A Note on Inference Systems</h2>
+
+                <p>It is worth noting that this approach is fundamentally a <strong>workaround</strong>.</p>
+
+                <p>Modern inference systems like TGI and vLLM already implement prefix caching internally. They handle prefix sharing across requests, efficient KV reuse, batching, and memory management for you.</p>
+
+                <p>This utility is most useful when you are:</p>
+
+                <ul>
+                    <li>working directly with Hugging Face Transformers</li>
+                    <li>building custom pipelines</li>
+                    <li>prototyping without a dedicated inference server</li>
+                </ul>
+
+                <h2>References</h2>
+
+                <ul>
+                    <li><a class="cactus-link" href="https://huggingface.co/docs/transformers/v4.47.1/en/kv_cache">Hugging Face Transformers: Best Practices for Generation with Cache</a></li>
+                </ul>
+
+                <hr>
+
+                <p>Have thoughts or questions about this post? Feel free to reach out via email or connect on LinkedIn.</p>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <div class="mx-auto max-w-3xl px-4 sm:px-8 py-8 text-center text-sm opacity-75">
+        <p>Built from scratch by me and Claude :)</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script>
+        if (window.hljs) {
+            window.hljs.highlightAll();
+        }
+    </script>
+    <script src="../script.js"></script>
+</body>
+</html>

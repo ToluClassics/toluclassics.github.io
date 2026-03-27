@@ -78,84 +78,24 @@
         <!-- Blog Posts -->
         <section id="blog-posts" class="mb-16">
             <div class="blog-posts">
-
                 <article class="blog-post-card">
                     <div class="blog-post-header">
                         <h2 class="blog-post-title">
-                            <a href="posts/multilingual-nlp-lessons.html" class="blog-post-link">
-                                Building Multilingual NLP Systems: Lessons from African Languages
+                            <a href="posts/simple-utility-context-caching-hugging-face.html" class="blog-post-link">
+                                A Simple Utility for Context Caching with Hugging Face
                             </a>
                         </h2>
                         <div class="blog-post-meta">
-                            <span class="blog-post-date">January 15, 2026</span>
+                            <span class="blog-post-date">March 25, 2026</span>
                             <span class="blog-post-tags">
-                                <span class="tag tag-safety">NLP</span>
-                                <span class="tag tag-arxiv">Multilingual</span>
+                                <span class="tag tag-github">Transformers</span>
+                                <span class="tag tag-arxiv">Inference</span>
+                                <span class="tag tag-safety">Caching</span>
                             </span>
                         </div>
                     </div>
                     <div class="blog-post-excerpt">
-                        <p>Working with low-resource languages presents unique challenges in NLP. In this post, I share key insights from developing multilingual systems for African languages, including data collection strategies, model selection, and evaluation frameworks that can transfer to other low-resource settings.</p>
-                    </div>
-                </article>
-
-                <article class="blog-post-card">
-                    <div class="blog-post-header">
-                        <h2 class="blog-post-title">
-                            <a href="posts/rag-systems-beyond-basics.html" class="blog-post-link">
-                                Understanding RAG Systems: Beyond Basic Retrieval
-                            </a>
-                        </h2>
-                        <div class="blog-post-meta">
-                            <span class="blog-post-date">December 8, 2025</span>
-                            <span class="blog-post-tags">
-                                <span class="tag tag-safety">RAG</span>
-                                <span class="tag tag-github">Information Retrieval</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="blog-post-excerpt">
-                        <p>Retrieval-Augmented Generation has become a cornerstone of modern LLM applications. This post explores advanced RAG patterns, including hybrid retrieval strategies, relevance assessment, and how to build robust systems that know when they don't know.</p>
-                    </div>
-                </article>
-
-                <article class="blog-post-card">
-                    <div class="blog-post-header">
-                        <h2 class="blog-post-title">
-                            <a href="posts/model-evaluation-production.html" class="blog-post-link">
-                                Thoughts on Model Evaluation in Production
-                            </a>
-                        </h2>
-                        <div class="blog-post-meta">
-                            <span class="blog-post-date">November 22, 2025</span>
-                            <span class="blog-post-tags">
-                                <span class="tag tag-safety">ML Engineering</span>
-                                <span class="tag tag-github">Evaluation</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="blog-post-excerpt">
-                        <p>Academic benchmarks don't always translate to production success. Drawing from experience building personalized AI systems, I discuss practical evaluation strategies, monitoring approaches, and how to close the loop between offline metrics and real-world performance.</p>
-                    </div>
-                </article>
-
-                <article class="blog-post-card">
-                    <div class="blog-post-header">
-                        <h2 class="blog-post-title">
-                            <a href="posts/building-karantaocr.html" class="blog-post-link">
-                                Open Source and Research: Building KarantaOCR
-                            </a>
-                        </h2>
-                        <div class="blog-post-meta">
-                            <span class="blog-post-date">October 5, 2025</span>
-                            <span class="blog-post-tags">
-                                <span class="tag tag-safety">OCR</span>
-                                <span class="tag tag-github">Open Source</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="blog-post-excerpt">
-                        <p>Reflections on building an open-source OCR system for African languages. I share the technical journey, from data collection and model architecture to community collaboration and deployment strategies that make language technology more accessible.</p>
+                        <p>Generation caches in Transformers are not the same thing as reusable context caches. This post shows a practical utility for reusing a fixed system prompt across independent requests without leaking prior conversation history.</p>
                     </div>
                 </article>
 
