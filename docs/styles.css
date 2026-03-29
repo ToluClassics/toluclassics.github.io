@@ -92,7 +92,9 @@ body {
 .h-7 { height: 1.75rem; }
 .w-7 { width: 1.75rem; }
 .h-10 { height: 2.5rem; }
+.h-14 { height: 3.5rem; }
 .w-6 { width: 1.5rem; }
+.w-14 { width: 3.5rem; }
 .text-sm { font-size: 0.875rem; }
 .text-xl { font-size: 1.25rem; }
 .text-2xl { font-size: 1.5rem; }
@@ -131,6 +133,7 @@ body {
     .sm\:me-0 { margin-inline-end: 0; }
     .sm\:py-0 { padding-top: 0; padding-bottom: 0; }
     .sm\:h-20 { height: 5rem; }
+    .sm\:w-20 { width: 5rem; }
     .sm\:w-12 { width: 3rem; }
     .sm\:text-2xl { font-size: 1.5rem; }
     .sm\:ps-18 { padding-inline-start: 4.5rem; }
@@ -270,6 +273,14 @@ body {
 }
 
 .header-logo { grid-area: logo; align-self: center; }
+.header-logo img {
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    max-width: none;
+    object-fit: contain;
+    flex-shrink: 0;
+}
 .header-title { grid-area: title; align-self: center; }
 .header-nav { grid-area: nav; align-self: center; }
 .header-controls { 
@@ -765,6 +776,10 @@ button:focus-visible {
 
     /* Add spacing after logo on mobile */
     .header-logo { margin-right: 0.5rem; }
+    .header-logo img {
+        width: 3rem;
+        height: 3rem;
+    }
 
     /* Enlarge hamburger icon visuals on mobile */
     #toggle-navigation-menu svg {
@@ -798,8 +813,9 @@ button:focus-visible {
         padding-top: 1rem !important;
     }
     
-    /* Better logo visibility and size */
-    #main-header svg {
+    /* Better header icon visibility on mobile */
+    #main-header .header-controls svg,
+    #main-header #toggle-navigation-menu svg {
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         height: 4rem !important; /* Increase from 3.5rem to 4rem */
         width: 2.4rem !important;  /* Increase from 2.1rem to 2.4rem, maintaining aspect ratio */
