@@ -1,0 +1,10 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const writing = await getCollection("writing", ({ data }) => !data.draft);
+const topics = [...new Set(writing.flatMap((entry) => entry.data.topics))].sort();
+---
+<BaseLayout title="Topics" description="Topics covered in Odunayo Ogundepo's writing.">
+  <header class="page-header"><p class="eyebrow">Browse</p><h1>Topics</h1></header>
+  <ul class="topic-grid">{topics.map((topic) => <li><a href={`/topics/${topic.toLowerCase().replaceAll(" ", "-")}/`}>{topic}</a></li>)}</ul>
+</BaseLayout>

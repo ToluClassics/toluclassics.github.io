@@ -7,7 +7,7 @@ This directory contains individual blog post HTML files.
 To add a new blog post:
 
 1. **Create a new HTML file** in this directory (e.g., `my-new-post.html`)
-   - Use `multilingual-nlp-lessons.html` as a template
+   - Use `_template.html` as a template
    - Update the title, meta description, and content
    - Make sure all asset links use `../` to go up one directory (e.g., `../assets/`, `../styles.css`)
 

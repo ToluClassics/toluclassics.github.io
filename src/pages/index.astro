@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+const writing = (await getCollection("writing", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+<BaseLayout>
+  <section class="hero hero-profile">
+    <div>
+      <h1>I’m Odunayo Ogundepo</h1>
+      <p class="credential">LLM Researcher <span aria-hidden="true">·</span> Applied Scientist</p>
+      <div class="hero-bio">
+        <p>I’m an Applied Scientist at Amazon working on Alexa Personalization. Part of my work focuses on helping Alexa learn useful information from a user’s interactions and apply the right user memories at the right moment.</p>
+        <p>Before Amazon, I was a Senior Data Scientist at LexisNexis, where I worked on retrieval-augmented generation, conversational search, entity linking, and named entity recognition.</p>
+        <p>I have a Master’s degree in Computer Science from the University of Waterloo.</p>
+        <p>I also collaborate on research and side projects focused on improving NLP systems for African languages. This site is where I write about what I learn while building these systems.</p>
+      </div>
+      <a class="primary-link" href="/writing/">Read the writing <span aria-hidden="true">→</span></a>
+    </div>
+    <img class="hero-portrait" src="/assets/profile.jpg" width="320" height="320" alt="Portrait of Odunayo Ogundepo" />
+  </section>
+
+  <section class="section" aria-labelledby="featured-heading">
+    <div class="section-heading">
+      <p class="eyebrow">Launch collection</p>
+      <h2 id="featured-heading">Featured writing</h2>
+    </div>
+    <div class="article-list">{writing.map((entry) => <ArticleCard entry={entry} />)}</div>
+  </section>
+
+  <section class="split-section">
+    <div id="publications">
+      <p class="eyebrow">Research</p>
+      <h2>Multilingual language models, retrieval, and evaluation.</h2>
+      <p>Selected publications and public research projects spanning multilingual benchmarks, retrieval, and low-resource languages.</p>
+      <a class="text-link" href="/research/">View selected research →</a>
+    </div>
+    <div id="about">
+      <span id="resume" aria-hidden="true"></span>
+      <p class="eyebrow">About</p>
+      <h2>Odunayo Ogundepo</h2>
+      <p>Applied Scientist working on Alexa Personalization, with a background in retrieval, conversational search, and multilingual NLP research.</p>
+      <a class="text-link" href="/about/">More about me →</a>
+    </div>
+  </section>
+</BaseLayout>

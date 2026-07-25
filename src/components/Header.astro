@@ -1,0 +1,79 @@
+---
+import { SITE } from "../config";
+const pathname = Astro.url.pathname;
+const links = [
+  { href: "/writing/", label: "Writing" },
+  { href: "/topics/", label: "Topics" },
+  { href: "/research/", label: "Research" },
+  { href: "/about/", label: "About" }
+];
+---
+<header class="site-header">
+  <a class="identity" href="/" aria-label={`${SITE.name}, home`}>
+    <span class="identity-name">{SITE.name}</span>
+    <span class="identity-role">{SITE.identity}</span>
+  </a>
+  <nav class="desktop-nav" aria-label="Primary">
+    {links.map((link) => (
+      <a href={link.href} aria-current={pathname.startsWith(link.href) ? "page" : undefined}>{link.label}</a>
+    ))}
+    <a href="/rss.xml">RSS</a>
+  </nav>
+  <div class="header-actions">
+    <button class="theme-toggle" type="button" aria-label="Switch color theme">◐</button>
+    <button class="menu-open" type="button" aria-controls="mobile-menu" aria-expanded="false">
+      <span class="sr-only">Open navigation</span><span aria-hidden="true">Menu</span>
+    </button>
+  </div>
+</header>
+<div id="mobile-menu" class="mobile-menu" hidden>
+  <div class="mobile-menu-inner">
+    <button class="menu-close" type="button"><span aria-hidden="true">Close</span><span class="sr-only">Close navigation</span></button>
+    <nav aria-label="Mobile">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a href="/rss.xml">RSS</a>
+    </nav>
+  </div>
+</div>
+<script>
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || savedTheme === "light") root.dataset.theme = savedTheme;
+
+  document.querySelector(".theme-toggle")?.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    localStorage.setItem("theme", next);
+  });
+
+  const panel = document.querySelector<HTMLElement>("#mobile-menu");
+  const openButton = document.querySelector<HTMLButtonElement>(".menu-open");
+  const closeButton = document.querySelector<HTMLButtonElement>(".menu-close");
+  const page = document.querySelector<HTMLElement>("#page");
+  const footer = document.querySelector<HTMLElement>(".site-footer");
+
+  function closeMenu() {
+    if (!panel || !openButton) return;
+    panel.hidden = true;
+    openButton.setAttribute("aria-expanded", "false");
+    page?.removeAttribute("inert");
+    footer?.removeAttribute("inert");
+    document.body.classList.remove("menu-active");
+    openButton.focus();
+  }
+
+  openButton?.addEventListener("click", () => {
+    if (!panel) return;
+    panel.hidden = false;
+    openButton.setAttribute("aria-expanded", "true");
+    page?.setAttribute("inert", "");
+    footer?.setAttribute("inert", "");
+    document.body.classList.add("menu-active");
+    closeButton?.focus();
+  });
+  closeButton?.addEventListener("click", closeMenu);
+  panel?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && panel && !panel.hidden) closeMenu();
+  });
+</script>

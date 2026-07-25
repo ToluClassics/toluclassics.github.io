@@ -1,32 +1,38 @@
-# Portfolio
+# Odunayo Ogundepo
 
-My personal portfolio website showcasing work in Applied AI Research.
+A writing-first personal publication for technical essays on language-model
+systems, inference, evaluation, and research in practice.
 
-**Live site:** [toluclassics.github.io](https://toluclassics.github.io)
-
-## Preview
-
-![Portfolio Screenshot](docs/assets/screenshot.png)
-
-
-## Tech Stack
-
-- Vanilla HTML, CSS, JavaScript
-- Markdown content
-- GitHub Pages hosting
-
-## Development
+## Local development
 
 ```bash
-# Serve locally
-python -m http.server 8000 -d docs/
+npm install
+npm run dev
 ```
 
-## Structure
+Run validation and create the static site:
 
-- `docs/index.html` - Main page
-- `docs/*.md` - Content (about, publications, resume)
-- `docs/styles.css` - Styling
-- `docs/script.js` - Functionality
+```bash
+npm run check
+npm run build
+```
 
-Inspired by [astro-theme-cactus](https://astro-cactus.chriswilliams.dev/) :)
+The production output is written to `dist/`.
+
+## Content
+
+Launch articles live in `src/content/writing/` as Markdown files with validated
+front matter. Published content automatically appears in the writing archive,
+topic pages, RSS feed, and sitemap.
+
+The previous site remains in `docs/` as a rollback source until the replacement
+has completed local review and publication is explicitly approved.
+
+## Publishing
+
+GitHub Pages hosts the static Astro build. Pull requests run the build-only CI
+workflow. Pushes to `master`, or a manual deployment run, validate the site,
+upload `dist/` as a Pages artifact, and deploy it through GitHub Actions.
+
+The pre-redesign site remains available in Git history and through the release
+rollback tag.

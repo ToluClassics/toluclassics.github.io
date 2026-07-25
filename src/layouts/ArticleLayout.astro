@@ -1,0 +1,36 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { render } from "astro:content";
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const published = entry.data.publishedAt;
+const updated = entry.data.updatedAt;
+const dateFormat = { dateStyle: "long", timeZone: "UTC" } as const;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: published.toISOString(),
+  dateModified: (updated ?? published).toISOString(),
+  author: { "@type": "Person", name: "Odunayo Ogundepo" },
+  mainEntityOfPage: `https://toluclassics.github.io/writing/${entry.id}/`
+};
+---
+<BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/writing/${entry.id}/`} type="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <article class="article">
+    <a class="back-link" href="/writing/">← All writing</a>
+    <header class="article-header">
+      <p class="eyebrow">{entry.data.topics.join(" · ")}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="dek">{entry.data.description}</p>
+      <p class="meta">
+        <time datetime={published.toISOString()}>{published.toLocaleDateString("en-CA", dateFormat)}</time>
+        {updated && <> · Updated <time datetime={updated.toISOString()}>{updated.toLocaleDateString("en-CA", dateFormat)}</time></>}
+        <> · {entry.data.readingMinutes} min read</>
+      </p>
+    </header>
+    <div class="article-body"><Content /></div>
+  </article>
+</BaseLayout>
