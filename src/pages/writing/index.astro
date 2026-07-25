@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+const writing = (await getCollection("writing", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+<BaseLayout title="Writing" description="Technical essays and practical notes by Odunayo Ogundepo.">
+  <header class="page-header">
+    <p class="eyebrow">Archive</p>
+    <h1>Writing</h1>
+    <p>Personal and practical notes from my day-to-day work.</p>
+  </header>
+  <div class="article-list">{writing.map((entry) => <ArticleCard entry={entry} />)}</div>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../config";
+import "../styles.css";
+
+const {
+  title = SITE.name,
+  description = SITE.description,
+  canonical = Astro.url.pathname,
+  noindex = false,
+  type = "website"
+} = Astro.props;
+const pageTitle = title === SITE.name ? `${SITE.name} — ${SITE.identity}` : `${title} — ${SITE.name}`;
+const canonicalUrl = new URL(canonical, SITE.url);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href="/rss.xml" />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem("theme");
+        if (saved === "dark" || saved === "light") document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header />
+    <main id="page">
+      <div id="main-content" tabindex="-1"><slot /></div>
+    </main>
+    <Footer />
+  </body>
+</html>

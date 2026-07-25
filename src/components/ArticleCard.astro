@@ -1,0 +1,11 @@
+---
+const { entry } = Astro.props;
+const date = entry.data.updatedAt ?? entry.data.publishedAt;
+const dateFormat = { dateStyle: "long", timeZone: "UTC" } as const;
+---
+<article class="article-card">
+  <p class="eyebrow">{entry.data.topics.join(" · ")}</p>
+  <h2><a href={`/writing/${entry.id}/`}>{entry.data.title}</a></h2>
+  <p>{entry.data.description}</p>
+  <p class="meta"><time datetime={date.toISOString()}>{date.toLocaleDateString("en-CA", dateFormat)}</time> · {entry.data.readingMinutes} min read</p>
+</article>

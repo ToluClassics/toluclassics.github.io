@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+export async function getStaticPaths() {
+  const entries = await getCollection("writing", ({ data }) => !data.draft);
+  const topics = [...new Set(entries.flatMap((entry) => entry.data.topics))];
+  return topics.map((topic) => ({
+    params: { topic: topic.toLowerCase().replaceAll(" ", "-") },
+    props: { topic, entries: entries.filter((entry) => entry.data.topics.includes(topic)) }
+  }));
+}
+const { topic, entries } = Astro.props;
+---
+<BaseLayout title={topic} description={`Writing about ${topic}.`}>
+  <header class="page-header"><p class="eyebrow">Topic</p><h1>{topic}</h1></header>
+  <div class="article-list">{entries.map((entry) => <ArticleCard entry={entry} />)}</div>
+</BaseLayout>

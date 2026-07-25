@@ -1,1 +1,7 @@
 astro-theme-cactus/
+node_modules/
+dist/
+.astro/
+.DS_Store
+__pycache__/
+*.py[cod]

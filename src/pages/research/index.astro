@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const publications = [
+  ["Global PIQA: Evaluating Physical Commonsense Reasoning Across 100+ Languages and Cultures", "2025", "https://arxiv.org/abs/2510.24081"],
+  ["AfroBench: How Good are Large Language Models on African Languages?", "2025", "https://aclanthology.org/2025.findings-acl.976/"],
+  ["Improving Multilingual Math Reasoning for African Languages", "2025", "https://arxiv.org/abs/2505.19848"],
+  ["“Knowing When You Don’t Know”: A Multilingual Relevance Assessment Dataset for Robust Retrieval-Augmented Generation", "2024", "https://aclanthology.org/2024.findings-emnlp.730/"],
+  ["MIRACL: A Multilingual Retrieval Dataset Covering 18 Diverse Languages", "2023", "https://aclanthology.org/2023.tacl-1.63/"]
+];
+---
+<BaseLayout title="Research" description="Selected publications by Odunayo Ogundepo.">
+  <header class="page-header"><p class="eyebrow">Selected work</p><h1>Research</h1><p>Multilingual language models, information retrieval, evaluation, and low-resource languages.</p></header>
+  <div class="publication-list">
+    {publications.map(([title, year, href]) => <article><p class="eyebrow">{year}</p><h2><a href={href}>{title}</a></h2></article>)}
+  </div>
+</BaseLayout>
